@@ -1,0 +1,18 @@
+<html>
+	<body>
+		<head>
+			<title>Mapa del Crimen</title>
+		</head>
+
+		<h1>Mapa del Crimen</h1>
+		<form action="/add" method="POST">
+			<input type="text" name="userinput">
+			<input type="submit" value="Reportar">
+		</form>
+
+		<a href="/clear">Borrar</a>
+		{% for userinput in data %}
+		<p>{{ userinput }}</p>
+		{% endfor %}
+	</body>
+</html>
