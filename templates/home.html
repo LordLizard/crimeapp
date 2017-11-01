@@ -22,6 +22,18 @@
 				map, 'click', function(event) {
 				placeMarker(event.latLng);
 			});
+			placeCrimes({{ crimes | safe }});
+		}
+
+		function placeCrimes(crimes) {
+			for (i=0; i<crimes.length; i++) {
+				crime = new google.maps.Marker( {
+					position: new google.maps.LatLng(crimes[i].latitude, crimes[i].longitude),
+					map: map,
+					title: crimes[i].date + "\n" + crimes[i].category + "\n" + crimes[i].description
+				}
+			);
+		}
 		}
 
 		function placeMarker(location) {
@@ -55,6 +67,8 @@
 					<option value="asalto">Asalto</option>
 					<option value="breakin">Invasion</option>
 				</select>
+				<label for="date">Fecha</label>
+				<input name="date" id="date" type="date">
 				<label for="latitude">Latitud</label>
 				<input name="latitude" id="latitude" text="text">
 				<label for="longitude">Longitud</label>
