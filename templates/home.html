@@ -1,18 +1,69 @@
-<html>
-	<body>
-		<head>
-			<title>Mapa del Crimen</title>
-		</head>
+<!doctype html>
+<html lang="es">
+	<head>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+		<script>
+
+		var map;
+		var marker;
+
+		function initialize() {
+			var mapOptions = {
+				center: new google.maps.LatLng(28.29151304635801, -81.40731811523438),
+				zoom: 13
+			};
+			
+			map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			
+			google.maps.event.addListener(
+				map, 'click', function(event) {
+				placeMarker(event.latLng);
+			});
+		}
+
+		function placeMarker(location) {
+			if (marker) {
+				marker.setPosition(location);
+			}else{
+				marker = new google.maps.Marker({
+					position: location,
+					map: map
+				});
+			}
+			document.getElementById('latitude').value = location.lat();
+			document.getElementById('longitude').value = location.lng();
+		}
+
+		</script>
+
+	</head>
+
+	<body onload="initialize()">
 		<h1>Mapa del Crimen</h1>
-		<form action="/add" method="POST">
-			<input type="text" name="userinput">
-			<input type="submit" value="Reportar">
-		</form>
+		<p>Un mapa de actividad reciente</p>
+		<div id="map-canvas">
+		</div>
 
-		<a href="/clear">Borrar</a>
-		{% for userinput in data %}
-		<p>{{ userinput }}</p>
-		{% endfor %}
+		<div id="newcrimeform">
+			<h2>Reporte un nuevo crimen</h2>
+			<form action="/submitcrime" method="POST">
+				<label for="category">Categoria</label>
+				<select name="category" id="category">
+					<option value="asalto">Asalto</option>
+					<option value="breakin">Invasion</option>
+				</select>
+				<label for="latitude">Latitud</label>
+				<input name="latitude" id="latitude" text="text">
+				<label for="longitude">Longitud</label>
+				<input name="longitud" id="longitude" text="text">
+				<label for="description">Descripcion</label>
+				<textarea name="description" id="description" placeholder="Una corta pero detallada descripcion del crimen"></textarea>
+				<input type="submit" value="Reportar">
+			</form>
+		</div>
 	</body>
 </html>
+
