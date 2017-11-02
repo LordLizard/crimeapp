@@ -14,5 +14,3 @@ class MockDBHelper():
             'description': 'Este es un asalto de prueba'
             }]
 
-    def clear_all(self):
-        pass
