@@ -56,8 +56,9 @@ def format_date(userdate):
         return None
 
 def sanitize_string(userinput):
-    whitelist = str(string.ascii_letters) + str(string.digits) + " !?$.,;:-'()&"
-    return filter(lambda x: x in whitelist, userinput)
+    whitelist = string.ascii_letters + string.digits + " !?$.,;:-'()&"
+    description = filter(lambda x: x in whitelist, userinput)
+    return description
 
 
 if __name__=='__main__':
